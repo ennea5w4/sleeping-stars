@@ -56,6 +56,7 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(27px,5.4vw,46px);
 .btn-ghost{margin-top:20px;background:transparent;color:rgba(255,255,255,.55);font-weight:400;
   box-shadow:0 0 0 1px rgba(255,255,255,.15);font-size:13px;padding:12px 40px;letter-spacing:.25em}
 .btn-ghost::before{display:none}
+.btn-save{margin-top:28px;font-size:13px;letter-spacing:.15em;padding:14px 36px;}
 .blend-card{margin-top:28px;padding:22px 20px;border-radius:16px;
   background:rgba(255,255,255,.04);border:1px solid rgba(180,160,255,.15);
   text-align:left;max-width:400px;margin-left:auto;margin-right:auto}
@@ -140,6 +141,7 @@ var CONFIG = {
   lineUrl:  'https://store.line.me/stickershop/author/5729491/ja' // LINEstickers
 };
 </script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
 <canvas class="bg-canvas" id="bg"></canvas>
@@ -178,6 +180,24 @@ var CONFIG = {
       <a class="btn" id="paidBtn" href="#" target="_blank" rel="noopener">Read the Full Reading</a>
     </div>
     <p class="line-promo">You can also enjoy the constellation cats as <a id="lineBtn" href="#" target="_blank" rel="noopener">LINE stickers</a>.</p>
+
+    <!-- Share card (off-screen) -->
+    <div id="share-card" style="position:fixed;left:-9999px;top:0;width:1080px;height:1350px;background:#05030f;font-family:'Cormorant',serif;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 20%,rgba(60,80,180,.3),transparent 60%),radial-gradient(ellipse at 80% 80%,rgba(100,60,200,.2),transparent 50%);"></div>
+      <canvas id="card-stars-canvas" width="1080" height="1350" style="position:absolute;inset:0;"></canvas>
+      <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;height:100%;padding:80px 80px 60px;">
+        <p style="font-family:'Cormorant',serif;font-size:36px;letter-spacing:.4em;color:#ffd97a;margin:0 0 8px;">SLEEPING STARS</p>
+        <p style="font-family:'Zen Kaku Gothic New',sans-serif;font-size:16px;letter-spacing:.25em;color:rgba(200,180,255,.6);margin:0 0 40px;">A Journey into Your Stars</p>
+        <div style="width:120px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,215,130,.5),transparent);margin-bottom:40px;"></div>
+        <p style="font-size:16px;letter-spacing:.3em;color:rgba(255,255,255,.5);margin:0 0 16px;font-family:sans-serif;">My Constellation</p>
+        <p id="card-typenum" style="font-family:'Cormorant',serif;font-size:100px;color:#fff;margin:0;line-height:1;text-shadow:0 0 60px rgba(160,140,255,.6);"></p>
+        <p id="card-typename" style="font-size:26px;letter-spacing:.15em;color:#ffd97a;margin:0 0 50px;font-family:'Cormorant',serif;"></p>
+        <img id="card-cat" style="width:480px;height:480px;object-fit:contain;filter:drop-shadow(0 0 40px rgba(120,100,255,.5));" src="" alt="">
+        <p id="card-msg" style="font-size:20px;color:rgba(255,255,255,.75);line-height:1.9;letter-spacing:.05em;text-align:center;max-width:800px;margin:40px 0 0;font-family:sans-serif;"></p>
+        <p style="position:absolute;bottom:60px;font-size:16px;letter-spacing:.2em;color:rgba(255,215,130,.45);font-family:sans-serif;">rainy-muse.sunnyday.jp</p>
+      </div>
+    </div>
+    <button class="btn btn-save" id="saveCardBtn" onclick="saveCard()">Save your constellation card</button>
     <button class="btn btn-ghost" onclick="restart()">Journey Again</button>
   </section>
 </div>
@@ -341,6 +361,41 @@ document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("lineBtn").href=CONFIG.lineUrl;
 });
 function start(){selected.clear();renderKw();show('s-quiz');}
+
+function drawCardStars(){
+  var cv=document.getElementById('card-stars-canvas');
+  if(!cv)return;
+  var ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,1080,1350);
+  for(var i=0;i<200;i++){
+    var x=Math.random()*1080,y=Math.random()*1350,r=Math.random()*1.5+.3,a=Math.random()*.8+.2;
+    ctx.beginPath();ctx.arc(x,y,r,0,6.28);
+    ctx.fillStyle=`rgba(220,220,255,${a})`;ctx.fill();
+  }
+}
+
+function updateShareCard(typeNum, typeName, imgSrc, msg){
+  document.getElementById('card-typenum').textContent=`Type ${typeNum}`;
+  document.getElementById('card-typename').textContent=typeName;
+  document.getElementById('card-cat').src=imgSrc;
+  document.getElementById('card-msg').textContent=msg;
+  drawCardStars();
+}
+
+function saveCard(){
+  var card=document.getElementById('share-card');
+  html2canvas(card,{
+    width:1080,height:1350,scale:1,
+    useCORS:true,allowTaint:true,
+    backgroundColor:'#05030f'
+  }).then(function(canvas){
+    var a=document.createElement('a');
+    a.href=canvas.toDataURL('image/png');
+    a.download=`sleeping-stars-type-${first}.png`;
+    a.click();
+  }).catch(function(e){console.error(e);});
+}
+
 function restart(){selected.clear();show('s-intro');}
 function show(id){document.querySelectorAll('.screen').forEach(e=>e.classList.remove('active'));
   const el=document.getElementById(id);void el.offsetWidth;el.classList.add('active');
@@ -395,6 +450,7 @@ function showResult(){
   document.getElementById('note').textContent=
     raw[first]===0?'No stars have been found yet. Your constellation is a placeholder — try selecting words that resonate with you.'
     :'★ marks a core star found for that type.\nBoth the primary and secondary constellations may reflect who you are right now.';
+  updateShareCard(first, TYPES[first].name, 'img/'+TYPES[first].img, TYPES[first].d);
   show('s-result');
 }
 </script>
