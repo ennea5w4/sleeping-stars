@@ -56,6 +56,16 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(27px,5.4vw,46px);
 .btn-ghost{margin-top:20px;background:transparent;color:rgba(255,255,255,.55);font-weight:400;
   box-shadow:0 0 0 1px rgba(255,255,255,.15);font-size:13px;padding:12px 40px;letter-spacing:.25em}
 .btn-ghost::before{display:none}
+.blend-card{margin-top:28px;padding:22px 20px;border-radius:16px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(180,160,255,.15);
+  text-align:left;max-width:400px;margin-left:auto;margin-right:auto}
+.blend-card-title{font-family:var(--serif);font-size:11px;letter-spacing:.2em;
+  color:var(--gold);margin-bottom:12px}
+.blend-card-text{font-size:12.5px;color:var(--sub);line-height:2.1;letter-spacing:.05em}
+.deep-card{margin-top:28px;padding:22px 20px;border-radius:16px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,215,130,.12);
+  text-align:left;max-width:400px;margin-left:auto;margin-right:auto}
+.deep-card-text{font-size:12.5px;color:var(--sub);line-height:2.1;letter-spacing:.05em}
 .teach-block{margin-top:28px;padding:20px 22px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(180,160,255,.15);text-align:left;max-width:400px;margin-left:auto;margin-right:auto}
 .teach-label{font-size:10px;letter-spacing:.18em;color:var(--gold);margin-bottom:10px}
 .teach-text{font-size:12.5px;color:var(--sub);line-height:2;letter-spacing:.05em}
@@ -64,7 +74,7 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(27px,5.4vw,46px);
 .btn-ghost:hover{color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.3)}
 .upsell{margin-top:36px;padding:28px 24px;border-radius:20px;
   background:rgba(255,255,255,.04);border:1px solid rgba(255,215,130,.2);
-  text-align:center;max-width:360px;margin-left:auto;margin-right:auto}
+  text-align:left;max-width:360px;margin-left:auto;margin-right:auto}
 .upsell-title{font-family:var(--serif);font-size:13px;color:#ffd97a;letter-spacing:.05em;margin-bottom:12px;white-space:nowrap}
 .upsell-sub{font-size:12px;color:var(--sub);line-height:1.9;letter-spacing:.05em;margin-bottom:20px}
 
@@ -160,10 +170,10 @@ var CONFIG = {
     <div class="result-art-wrap"><img class="result-art" id="result-art" alt="タイプのイラスト"></div>
     <div class="cand" id="cand"></div>
     <div class="teach-block" id="teach-block"></div>
+    <div class="blend-card" id="blend-card"></div>
     <p class="note" id="note"></p>
+    <div class="deep-card" id="deep-card"></div>
     <div class="upsell">
-      <p class="upsell-title">あなたの星座には、まだ続きがあります。</p>
-      <p class="upsell-sub">有料版では、今回見つかった星座をもとに、あなたのタイプ傾向・強み・つまずきやすいパターンを、より詳しく読み解きます。</p>
       <a class="btn" id="paidBtn" href="#" target="_blank" rel="noopener">星座の続きを読む</a>
     </div>
     <p class="line-promo">あなたの星座の猫たちを、<a id="lineBtn" href="#" target="_blank" rel="noopener">LINEスタンプ</a>でも楽しめます。</p>
@@ -366,6 +376,27 @@ function showResult(){
       <span class="cnt">星 ${raw[t]}${star}</span></div>
       <div class="desc">${T.d}（${T.center}センター）<br>${T.long}</div>`;
   }).join('');
+  // blend-card: 重なり説明
+  var fn=TYPES[first].name, sn=TYPES[second].name;
+  document.getElementById('blend-card').innerHTML=
+    '<p class="blend-card-title">あなたの星の重なり</p>'+
+    '<p class="blend-card-text">'+
+    'あなたはType'+first+'「'+fn+'」の星を中心に持ちながら、<br>'+
+    'Type'+second+'「'+sn+'」のやわらかさも重なっています。<br><br>'+
+    '第一候補の星座は、今のあなたの中心に近い傾向を。<br>'+
+    '第二候補の星座は、その奥で影響している別の感覚を映しています。<br><br>'+
+    '人の内側は、ひとつのタイプだけでできているわけではありません。<br>'+
+    '強みとして出る星、迷ったときに顔を出す星、まだ言葉になっていない星が、少しずつ重なっています。'+
+    '</p>';
+
+  // deep-card: 有料版への橋渡し
+  document.getElementById('deep-card').innerHTML=
+    '<p class="blend-card-text">'+
+    'この無料診断で見えたのは、今のあなたに強くあらわれている星の輪郭です。<br><br>'+
+    '有料版では、第一候補と第二候補の重なり、強みとして輝く場面、つまずきやすい心の流れまで、もう少し深く読み解いていきます。<br><br>'+
+    '自分の星座を、もう少し近くで眺めてみたい方は、続きの鑑定へお進みください。'+
+    '</p>';
+
   document.getElementById('teach-block').innerHTML='<p class="teach-label">この星座が教えてくれること</p><p class="teach-text">'+TYPES[first].teach+'</p>';
   document.getElementById('note').textContent=
     raw[first]===0?'まだ星が見つかっていないため、星座は仮のものです。心に触れる言葉を選び直してみてください。'
