@@ -69,6 +69,8 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(27px,5.4vw,46px);
 .teach-block{margin-top:28px;padding:20px 22px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(180,160,255,.15);text-align:left;max-width:400px;margin-left:auto;margin-right:auto}
 .teach-label{font-size:10px;letter-spacing:.18em;color:var(--gold);margin-bottom:10px}
 .teach-text{font-size:12.5px;color:var(--sub);line-height:2;letter-spacing:.05em}
+.lang-link{display:inline-block;margin-top:14px;padding:8px 18px;font-size:12px;letter-spacing:.08em;color:#f2cf7a;text-decoration:none;border:1px solid rgba(242,207,122,.45);border-radius:999px;background:rgba(255,255,255,.04);backdrop-filter:blur(8px)}
+.lang-link:hover{color:#fff;border-color:rgba(242,207,122,.75);box-shadow:0 0 18px rgba(242,207,122,.18)}
 .line-promo{margin-top:28px;font-size:12px;color:var(--sub);letter-spacing:.08em}
 .line-promo a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
 .btn-ghost:hover{color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.3)}
@@ -148,7 +150,8 @@ var CONFIG = {
 
 <div id="app">
   <section class="screen active" id="s-intro">
-    <img class="hero" src="img/journey_top.png" alt="眠る星をさがす旅" onclick="start()" style="cursor:pointer">
+    <img class="hero" src="img/journey_top_ja.png" alt="眠る星をさがす旅" onclick="start()" style="cursor:pointer">
+    <a class="lang-link" href="index-en.html">English version はこちら</a>
     <p class="lead">心にひびく言葉を、直感で選んでください。<br>
     見つけた星が増えるほど、あなただけの星座が少しずつ輝きを帯びていきます。</p>
   </section>
