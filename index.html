@@ -61,7 +61,7 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(27px,5.4vw,46px);
   text-align:left;max-width:400px;margin-left:auto;margin-right:auto}
 .blend-card-title{font-family:var(--serif);font-size:11px;letter-spacing:.2em;
   color:var(--gold);margin-bottom:12px}
-.blend-card-text{font-size:12.5px;color:var(--sub);line-height:2.1;letter-spacing:.05em}
+.blend-card-text{font-size:12.5px;color:var(--sub);line-height:2.1;letter-spacing:.05em;margin-bottom:12px}.blend-card-text:last-child{margin-bottom:0}
 .deep-card{margin-top:28px;padding:22px 20px;border-radius:16px;
   background:rgba(255,255,255,.03);border:1px solid rgba(255,215,130,.12);
   text-align:left;max-width:400px;margin-left:auto;margin-right:auto}
@@ -380,21 +380,16 @@ function showResult(){
   var fn=TYPES[first].name, sn=TYPES[second].name;
   document.getElementById('blend-card').innerHTML=
     '<p class="blend-card-title">あなたの星の重なり</p>'+
-    '<p class="blend-card-text">'+
-    'あなたはType'+first+'「'+fn+'」の星を中心に持ちながら、<br>'+
-    'Type'+second+'「'+sn+'」のやわらかさも重なっています。<br><br>'+
-    '第一候補の星座は、今のあなたの中心に近い傾向を。<br>'+
-    '第二候補の星座は、その奥で影響している別の感覚を映しています。<br><br>'+
-    '人の内側は、ひとつのタイプだけでできているわけではありません。<br>'+
-    '強みとして出る星、迷ったときに顔を出す星、まだ言葉になっていない星が、少しずつ重なっています。'+
-    '</p>';
+    '<p class="blend-card-text">あなたはType'+first+'「'+fn+'」の星を中心に持ちながら、Type'+second+'「'+sn+'」のやわらかさも重なっています。</p>'+
+    '<p class="blend-card-text">第一候補の星座は、今のあなたの中心に近い傾向を。第二候補の星座は、その奥で影響している別の感覚を映しています。</p>'+
+    '<p class="blend-card-text">人の内側は、ひとつのタイプだけでできているわけではありません。強みとして出る星、迷ったときに顔を出す星、まだ言葉になっていない星が、少しずつ重なっています。</p>';
 
   // deep-card: 有料版への橋渡し
   document.getElementById('deep-card').innerHTML=
     '<p class="blend-card-text">'+
-    'この無料診断で見えたのは、今のあなたに強くあらわれている星の輪郭です。<br><br>'+
-    '有料版では、第一候補と第二候補の重なり、強みとして輝く場面、つまずきやすい心の流れまで、もう少し深く読み解いていきます。<br><br>'+
-    '自分の星座を、もう少し近くで眺めてみたい方は、続きの鑑定へお進みください。'+
+    'この無料診断で見えたのは、今のあなたに強くあらわれている星の輪郭です。</p>'+
+    '<p class="blend-card-text">有料版では、第一候補と第二候補の重なり、強みとして輝く場面、つまずきやすい心の流れまで、もう少し深く読み解いていきます。</p>'+
+    '<p class="blend-card-text">自分の星座を、もう少し近くで眺めてみたい方は、続きの鑑定へお進みください。'+
     '</p>';
 
   document.getElementById('teach-block').innerHTML='<p class="teach-label">この星座が教えてくれること</p><p class="teach-text">'+TYPES[first].teach+'</p>';
