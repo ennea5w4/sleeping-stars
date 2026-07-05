@@ -356,6 +356,7 @@ function enneagramSVG(first,second){
     ${lines}${dots}</svg>`;
 }
 var selected=new Set();
+var first=0,second=0;
 document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("paidBtn").href=CONFIG.paidUrl;
   document.getElementById("lineBtn").href=CONFIG.lineUrl;
@@ -421,7 +422,7 @@ function showResult(){
   var raw={},w={};ORDER.forEach(t=>{raw[t]=0;w[t]=0;});
   selected.forEach(id=>{const[t,k]=id.split('|');raw[t]++;w[t]+=TYPES[t].core.includes(k)?2:1;});
   var ranked=ORDER.slice().sort((a,b)=>raw[b]-raw[a]||w[b]-w[a]);
-  var first=ranked[0],second=ranked[1];
+  first=ranked[0];second=ranked[1];
   document.getElementById('enneagram').innerHTML=enneagramSVG(first,second);
   document.getElementById('bignum').innerHTML=`Type ${first}<small>Secondary　Type ${second}</small>`;
   document.getElementById('result-art').src='img/'+TYPES[first].img;
